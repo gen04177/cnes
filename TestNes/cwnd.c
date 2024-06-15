@@ -96,6 +96,16 @@ int wnd_init(const char *filename)
         fprintf(stderr, "Couldn't create SDL renderer: %s\n", SDL_GetError());
         return -1;
     }
+
+    SDL_RendererInfo info;
+    if (SDL_GetRendererInfo(renderer, &info) != 0) {
+        fprintf(stderr, "Failed to get renderer info: %s\n", SDL_GetError());
+    } else {
+        printf("\nRenderer name: %s\n", info.name);
+        printf("Flags supported: %u\n", info.flags);
+        printf("Texture formats count: %u\n", info.num_texture_formats);
+        printf("\n*** Loading cnes PS5 ***\n");
+    }
     
     if (SDL_RenderSetLogicalSize(renderer, WIDTH * MAG, HEIGHT * MAG) != 0) {
         fprintf(stderr, "Couldn't set SDL renderer logical resolution: %s\n", SDL_GetError());
