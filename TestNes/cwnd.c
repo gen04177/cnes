@@ -13,7 +13,7 @@
 #define HEIGHT  240
 #define MAG     1
 
-uint8_t wnd_key2btn(SDL_Event *event, uint8_t* ctrl);
+uint8_t wnd_dsbtn(SDL_Event *event, uint8_t* ctrl);
 
 static uint32_t palette_sys[] =
 {
@@ -156,18 +156,18 @@ int wnd_poll(uint8_t* ctrl)
                     SDL_SetWindowFullscreen(window, full_screen ? SDL_WINDOW_FULLSCREEN_DESKTOP : 0);
                     break;
                 }
-                wnd_key2btn(&event, ctrl);
+                wnd_dsbtn(&event, ctrl);
                 break;
             case SDL_CONTROLLERBUTTONDOWN:
             case SDL_CONTROLLERBUTTONUP:
-                wnd_key2btn(&event, ctrl);
+                wnd_dsbtn(&event, ctrl);
                 break;
         }
     }
     return 0;
 }
 
-uint8_t wnd_key2btn(SDL_Event *event, uint8_t* ctrl)
+uint8_t wnd_dsbtn(SDL_Event *event, uint8_t* ctrl)
 {
     uint8_t btn = 0;
     
@@ -195,16 +195,10 @@ uint8_t wnd_key2btn(SDL_Event *event, uint8_t* ctrl)
                     btn = 1 << 7;
                     break;
                 case SDL_CONTROLLER_BUTTON_X:
-                    btn = 1 << 4; // 
-                    break;
-                case SDL_CONTROLLER_BUTTON_Y:
                     btn = 1 << 5; // 
                     break;
-                case SDL_CONTROLLER_BUTTON_TOUCHPAD:
-                    btn = 1 << 9; // 
-                    break;
-                case SDL_CONTROLLER_BUTTON_START:
-                    btn = 1 << 10; // 
+                case SDL_CONTROLLER_BUTTON_Y:
+                    btn = 1 << 4; // 
                     break;
             }
             if (event->type == SDL_CONTROLLERBUTTONDOWN) {
