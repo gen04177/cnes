@@ -7,6 +7,7 @@
 
 #include <stdio.h>
 #include <stdint.h>
+#include <stdbool.h>
 #include <SDL2/SDL.h>
 
 #define WIDTH   256
@@ -41,6 +42,8 @@ static uint32_t time_frame0;
 int wnd_init(const char *filename)
 {
     int error = 0;
+    bool useOpenGL = true;
+    
     if ((error = SDL_Init(SDL_INIT_VIDEO | SDL_INIT_GAMECONTROLLER)) != 0) {
         fprintf(stderr, "Couldn't init SDL: %s\n", SDL_GetError());
         return -1;
@@ -67,18 +70,33 @@ int wnd_init(const char *filename)
     window = SDL_CreateWindow(filename,
                               SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
                               WIDTH * MAG, HEIGHT * MAG,
-                              SDL_WINDOW_SHOWN);
+                              SDL_WINDOW_SHOWN | (useOpenGL ? SDL_WINDOW_OPENGL : 0));
     if (!window) {
-        fprintf(stderr, "Couldn't create SDL window: %s\n", SDL_GetError());
-        return -1;
+        fprintf(stderr, "Couldn't create SDL window with OpenGL: %s\n", SDL_GetError());
+
+        useOpenGL = false;
+        window = SDL_CreateWindow(filename,
+                                  SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+                                  WIDTH * MAG, HEIGHT * MAG,
+                                  SDL_WINDOW_SHOWN);
+        if (!window) {
+            fprintf(stderr, "Couldn't create SDL window without OpenGL: %s\n", SDL_GetError());
+            return -1;
+        }
     }
 
-    renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_SOFTWARE);
-    //renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+
+    if (useOpenGL) {
+        renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+    } else {
+        renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_SOFTWARE);
+    }
+
     if (!renderer) {
         fprintf(stderr, "Couldn't create SDL renderer: %s\n", SDL_GetError());
         return -1;
     }
+    
     if (SDL_RenderSetLogicalSize(renderer, WIDTH * MAG, HEIGHT * MAG) != 0) {
         fprintf(stderr, "Couldn't set SDL renderer logical resolution: %s\n", SDL_GetError());
         return -1;
