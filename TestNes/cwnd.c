@@ -74,6 +74,7 @@ int wnd_init(const char *filename)
     }
 
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_SOFTWARE);
+    //renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
     if (!renderer) {
         fprintf(stderr, "Couldn't create SDL renderer: %s\n", SDL_GetError());
         return -1;
