@@ -82,7 +82,7 @@ int wnd_init(const char *filename)
         fprintf(stderr, "Couldn't set SDL renderer logical resolution: %s\n", SDL_GetError());
         return -1;
     }
-    texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_STREAMING, WIDTH * MAG, HEIGHT * MAG);
+    texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGB24, SDL_TEXTUREACCESS_STREAMING, WIDTH * MAG, HEIGHT * MAG);
     if (!texture) {
         fprintf(stderr, "Couldn't create SDL texture: %s\n", SDL_GetError());
         return -1;
@@ -105,23 +105,26 @@ static uint32_t wnd_time_left(void)
 
 void wnd_draw(uint8_t* pixels)
 {
-    uint32_t *fb = (uint32_t*)pic_mem_orgl;
+    uint8_t *fb = pic_mem_orgl;
     for (unsigned int y = 0; y < HEIGHT; y++) {
         for (unsigned int x = 0; x < WIDTH; x++) {
             uint32_t pixel = *(pixels + WIDTH * y + x);
             uint32_t rgb = palette_sys[pixel];
-            *fb++ = rgb;
+            *fb++ = (rgb >> 16) & 0xFF;  // R
+            *fb++ = (rgb >> 8) & 0xFF;   // G
+            *fb++ = rgb & 0xFF;          // B
         }
     }
-
 
     ++frame_counter;
     SDL_Delay(wnd_time_left());
 
-    void *p; int pitch;
+    void *p;
+    int pitch;
     SDL_LockTexture(texture, &rect, &p, &pitch);
-    SDL_memcpy(p, pic_mem_orgl, HEIGHT * MAG * WIDTH * MAG * 4);
+    SDL_memcpy(p, pic_mem_orgl, HEIGHT * MAG * WIDTH * MAG * 3);
     SDL_UnlockTexture(texture);
+
     SDL_RenderClear(renderer);
     SDL_RenderCopy(renderer, texture, &rect, &rect);
     SDL_RenderPresent(renderer);
@@ -144,20 +147,6 @@ int wnd_poll(uint8_t* ctrl)
 
     while (SDL_PollEvent(&event)) {
         switch (event.type) {
-            case SDL_QUIT:
-                printf("shutdown...\n");
-                return 1;
-            case SDL_KEYDOWN:
-            case SDL_KEYUP:
-                if (event.key.keysym.sym == SDLK_ESCAPE) return 1;
-                if (event.key.keysym.sym == SDLK_f && event.key.state == SDL_RELEASED) {
-                    full_screen ^= 1;
-                    SDL_ShowCursor(full_screen ? SDL_DISABLE : SDL_ENABLE);
-                    SDL_SetWindowFullscreen(window, full_screen ? SDL_WINDOW_FULLSCREEN_DESKTOP : 0);
-                    break;
-                }
-                wnd_dsbtn(&event, ctrl);
-                break;
             case SDL_CONTROLLERBUTTONDOWN:
             case SDL_CONTROLLERBUTTONUP:
                 wnd_dsbtn(&event, ctrl);
