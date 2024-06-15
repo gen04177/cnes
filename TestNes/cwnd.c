@@ -41,7 +41,7 @@ static uint32_t time_frame0;
 int wnd_init(const char *filename)
 {
     int error = 0;
-    if ((error = SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO| SDL_INIT_GAMECONTROLLER)) != 0) {
+    if ((error = SDL_Init(SDL_INIT_VIDEO | SDL_INIT_GAMECONTROLLER)) != 0) {
         fprintf(stderr, "Couldn't init SDL: %s\n", SDL_GetError());
         return -1;
     }
