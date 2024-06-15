@@ -7,6 +7,7 @@
 //
 
 #include "ccpu.h"
+#include <stdlib.h>
 
 #define   CPU_READ8(c, addr)           ((c)->read8((addr)))
 #define   CPU_WRITE8(c, addr, v)       ((c)->write8((addr), (v)))
