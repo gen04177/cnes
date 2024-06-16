@@ -7,6 +7,7 @@ endif
 CFLAGS := -O3 -I./TestNes -I./TestNes/MMC \
           $(shell ${PS5_SYSROOT}/bin/sdl2-config --cflags --libs) \
           -lkernel_sys -lSDL2main -lSDL2_mixer -lSDL2
+# -lGL
 
 SRCS := TestNes/capu.c TestNes/ccpu.c TestNes/main.c  TestNes/cnes.c TestNes/cppu.c TestNes/cwnd.c \
         TestNes/MMC/mapper_aorom.c TestNes/MMC/mapper.c \
