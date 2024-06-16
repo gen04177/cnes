@@ -12,7 +12,6 @@
 
 #define WIDTH   256
 #define HEIGHT  240
-#define MAG     1
 
 uint8_t wnd_dsbtn(SDL_Event *event, uint8_t* ctrl);
 
@@ -34,7 +33,7 @@ static SDL_Texture *texture;
 static SDL_Rect rect;
 
 static uint8_t pic_mem_orgl[WIDTH * HEIGHT * 4];
-static uint8_t pic_mem_frnt[WIDTH * HEIGHT * 4 * MAG * MAG];
+static uint8_t pic_mem_frnt[WIDTH * HEIGHT * 4];
 static int full_screen = 0;
 static uint32_t frame_counter;
 static uint32_t time_frame0;
@@ -64,12 +63,12 @@ int wnd_init(const char *filename)
     SDL_PauseAudio(0);
 
     rect.x = rect.y = 0;
-    rect.h = HEIGHT * MAG;
-    rect.w = WIDTH * MAG;
+    rect.h = HEIGHT;
+    rect.w = WIDTH;
 
     window = SDL_CreateWindow(filename,
                               SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-                              WIDTH * MAG, HEIGHT * MAG,
+                              WIDTH, HEIGHT,
                               SDL_WINDOW_SHOWN | (useOpenGL ? SDL_WINDOW_OPENGL : 0));
     if (!window) {
         fprintf(stderr, "Couldn't create SDL window with OpenGL: %s\n", SDL_GetError());
@@ -77,7 +76,7 @@ int wnd_init(const char *filename)
         useOpenGL = false;
         window = SDL_CreateWindow(filename,
                                   SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-                                  WIDTH * MAG, HEIGHT * MAG,
+                                  WIDTH, HEIGHT,
                                   SDL_WINDOW_SHOWN);
         if (!window) {
             fprintf(stderr, "Couldn't create SDL window without OpenGL: %s\n", SDL_GetError());
@@ -107,11 +106,11 @@ int wnd_init(const char *filename)
         printf("\n*** Loading cnes PS5 ***\n");
     }
     
-    if (SDL_RenderSetLogicalSize(renderer, WIDTH * MAG, HEIGHT * MAG) != 0) {
+    if (SDL_RenderSetLogicalSize(renderer, WIDTH, HEIGHT) != 0) {
         fprintf(stderr, "Couldn't set SDL renderer logical resolution: %s\n", SDL_GetError());
         return -1;
     }
-    texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGB24, SDL_TEXTUREACCESS_STREAMING, WIDTH * MAG, HEIGHT * MAG);
+    texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGB24, SDL_TEXTUREACCESS_STREAMING, WIDTH, HEIGHT);
     if (!texture) {
         fprintf(stderr, "Couldn't create SDL texture: %s\n", SDL_GetError());
         return -1;
@@ -151,7 +150,7 @@ void wnd_draw(uint8_t* pixels)
     void *p;
     int pitch;
     SDL_LockTexture(texture, &rect, &p, &pitch);
-    SDL_memcpy(p, pic_mem_orgl, HEIGHT * MAG * WIDTH * MAG * 3);
+    SDL_memcpy(p, pic_mem_orgl, HEIGHT * WIDTH * 3);
     SDL_UnlockTexture(texture);
 
     SDL_RenderClear(renderer);
