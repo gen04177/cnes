@@ -101,8 +101,6 @@ int wnd_init(const char *filename)
         fprintf(stderr, "Failed to get renderer info: %s\n", SDL_GetError());
     } else {
         printf("\nRenderer name: %s\n", info.name);
-        printf("Flags supported: %u\n", info.flags);
-        printf("Texture formats count: %u\n", info.num_texture_formats);
         printf("\n*** Loading cnes PS5 ***\n");
     }
     
