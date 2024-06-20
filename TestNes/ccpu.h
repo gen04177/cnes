@@ -41,6 +41,15 @@ typedef struct
     
 } cpu_context;
 
+typedef struct {
+    void (*execute)(cpu_context *, stepInfo *);
+    const char *name;
+    uint8_t mode;
+    uint8_t size;
+    uint8_t cycles;
+    uint8_t pageCycles;
+} cpu_instruction;
+
 void    cpu_init(cpu_context *);
 uint8_t cpu_step(cpu_context *);
 void    cpu_nmi(cpu_context *);
