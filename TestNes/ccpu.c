@@ -115,262 +115,262 @@ void xaa(cpu_context *c, stepInfo *info) {}
 
 //instruction table
 static const cpu_instruction instructions[256] = {
-    {brk, "BRK", modeImplied, 1, 0, 0},             // 00
-    {ora, "ORA", modeIndexedIndirect, 2, 6, 0},     // 01
-    {kil, "KIL", modeImplied, 0, 2, 0},             // 02
-    {slo, "SLO", modeIndexedIndirect, 2, 8, 0},     // 03
-    {nop, "NOP", modeZeroPage, 2, 3, 0},            // 04
-    {ora, "ORA", modeZeroPage, 2, 3, 0},            // 05
-    {asl, "ASL", modeZeroPage, 2, 5, 0},            // 06
-    {slo, "SLO", modeZeroPage, 2, 5, 0},            // 07
-    {php, "PHP", modeImplied, 1, 3, 0},             // 08
-    {ora, "ORA", modeImmediate, 2, 2, 0},           // 09
-    {asl, "ASL", modeAccumulator, 1, 2, 0},         // 0A
-    {anc, "ANC", modeImmediate, 2, 2, 0},           // 0B
-    {nop, "NOP", modeAbsolute, 3, 4, 0},            // 0C
-    {ora, "ORA", modeAbsolute, 3, 4, 0},            // 0D
-    {asl, "ASL", modeAbsolute, 3, 6, 0},            // 0E
-    {slo, "SLO", modeAbsolute, 3, 6, 0},            // 0F
-    {bpl, "BPL", modeRelative, 2, 2, 1},            // 10
-    {ora, "ORA", modeIndirectIndexed, 2, 5, 1},     // 11
-    {kil, "KIL", modeImplied, 0, 2, 0},             // 12
-    {slo, "SLO", modeIndirectIndexed, 2, 8, 0},     // 13
-    {nop, "NOP", modeZeroPageX, 2, 4, 0},           // 14
-    {ora, "ORA", modeZeroPageX, 2, 4, 0},           // 15
-    {asl, "ASL", modeZeroPageX, 2, 6, 0},           // 16
-    {slo, "SLO", modeZeroPageX, 2, 6, 0},           // 17
-    {clc, "CLC", modeImplied, 1, 2, 0},             // 18
-    {ora, "ORA", modeAbsoluteY, 3, 4, 1},           // 19
-    {nop, "NOP", modeImplied, 1, 2, 0},             // 1A
-    {slo, "SLO", modeAbsoluteY, 3, 7, 0},           // 1B
-    {nop, "NOP", modeAbsoluteX, 3, 4, 1},           // 1C
-    {ora, "ORA", modeAbsoluteX, 3, 4, 1},           // 1D
-    {asl, "ASL", modeAbsoluteX, 3, 7, 0},           // 1E
-    {slo, "SLO", modeAbsoluteX, 3, 7, 0},           // 1F
-    {jsr, "JSR", modeAbsolute, 3, 6, 0},            // 20
-    {and, "AND", modeIndexedIndirect, 2, 6, 0},     // 21
-    {kil, "KIL", modeImplied, 0, 2, 0},             // 22
-    {rla, "RLA", modeIndexedIndirect, 2, 8, 0},     // 23
-    {bit, "BIT", modeZeroPage, 2, 3, 0},            // 24
-    {and, "AND", modeZeroPage, 2, 3, 0},            // 25
-    {rol, "ROL", modeZeroPage, 2, 5, 0},            // 26
-    {rla, "RLA", modeZeroPage, 2, 5, 0},            // 27
-    {plp, "PLP", modeImplied, 1, 4, 0},             // 28
-    {and, "AND", modeImmediate, 2, 2, 0},           // 29
-    {rol, "ROL", modeAccumulator, 1, 2, 0},         // 2A
-    {anc, "ANC", modeImmediate, 2, 2, 0},           // 2B
-    {bit, "BIT", modeAbsolute, 3, 4, 0},            // 2C
-    {and, "AND", modeAbsolute, 3, 4, 0},            // 2D
-    {rol, "ROL", modeAbsolute, 3, 6, 0},            // 2E
-    {rla, "RLA", modeAbsolute, 3, 6, 0},            // 2F
-    {bmi, "BMI", modeRelative, 2, 2, 1},            // 30
-    {and, "AND", modeIndirectIndexed, 2, 5, 1},     // 31
-    {kil, "KIL", modeImplied, 0, 2, 0},             // 32
-    {rla, "RLA", modeIndirectIndexed, 2, 8, 0},     // 33
-    {nop, "NOP", modeZeroPageX, 2, 4, 0},           // 34
-    {and, "AND", modeZeroPageX, 2, 4, 0},           // 35
-    {rol, "ROL", modeZeroPageX, 2, 6, 0},           // 36
-    {rla, "RLA", modeZeroPageX, 2, 6, 0},           // 37
-    {sec, "SEC", modeImplied, 1, 2, 0},             // 38
-    {and, "AND", modeAbsoluteY, 3, 4, 1},           // 39
-    {nop, "NOP", modeImplied, 1, 2, 0},             // 3A
-    {rla, "RLA", modeAbsoluteY, 3, 7, 0},           // 3B
-    {nop, "NOP", modeAbsoluteX, 3, 4, 1},           // 3C
-    {and, "AND", modeAbsoluteX, 3, 4, 1},           // 3D
-    {rol, "ROL", modeAbsoluteX, 3, 7, 0},           // 3E
-    {rla, "RLA", modeAbsoluteX, 3, 7, 0},           // 3F
-    {rti, "RTI", modeImplied, 1, 6, 0},             // 40
-    {eor, "EOR", modeIndexedIndirect, 2, 6, 0},     // 41
-    {kil, "KIL", modeImplied, 0, 2, 0},             // 42
-    {sre, "SRE", modeIndexedIndirect, 2, 8, 0},     // 43
-    {nop, "NOP", modeZeroPage, 2, 3, 0},            // 44
-    {eor, "EOR", modeZeroPage, 2, 3, 0},            // 45
-    {lsr, "LSR", modeZeroPage, 2, 5, 0},            // 46
-    {sre, "SRE", modeZeroPage, 2, 5, 0},            // 47
-    {pha, "PHA", modeImplied, 1, 3, 0},             // 48
-    {eor, "EOR", modeImmediate, 2, 2, 0},           // 49
-    {lsr, "LSR", modeAccumulator, 1, 2, 0},         // 4A
-    {alr, "ALR", modeImmediate, 2, 2, 0},           // 4B
-    {jmp, "JMP", modeAbsolute, 3, 3, 0},            // 4C
-    {eor, "EOR", modeAbsolute, 3, 4, 0},            // 4D
-    {lsr, "LSR", modeAbsolute, 3, 6, 0},            // 4E
-    {sre, "SRE", modeAbsolute, 3, 6, 0},            // 4F
-    {bvc, "BVC", modeRelative, 2, 2, 1},            // 50
-    {eor, "EOR", modeIndirectIndexed, 2, 5, 1},     // 51
-    {kil, "KIL", modeImplied, 0, 2, 0},             // 52
-    {sre, "SRE", modeIndirectIndexed, 2, 8, 0},     // 53
-    {nop, "NOP", modeZeroPageX, 2, 4, 0},           // 54
-    {eor, "EOR", modeZeroPageX, 2, 4, 0},           // 55
-    {lsr, "LSR", modeZeroPageX, 2, 6, 0},           // 56
-    {sre, "SRE", modeZeroPageX, 2, 6, 0},           // 57
-    {cli, "CLI", modeImplied, 1, 2, 0},             // 58
-    {eor, "EOR", modeAbsoluteY, 3, 4, 1},           // 59
-    {nop, "NOP", modeImplied, 1, 2, 0},             // 5A
-    {sre, "SRE", modeAbsoluteY, 3, 7, 0},           // 5B
-    {nop, "NOP", modeAbsoluteX, 3, 4, 1},           // 5C
-    {eor, "EOR", modeAbsoluteX, 3, 4, 1},           // 5D
-    {lsr, "LSR", modeAbsoluteX, 3, 7, 0},           // 5E
-    {sre, "SRE", modeAbsoluteX, 3, 7, 0},           // 5F
-    {rts, "RTS", modeImplied, 1, 6, 0},             // 60
-    {adc, "ADC", modeIndexedIndirect, 2, 6, 0},     // 61
-    {kil, "KIL", modeImplied, 0, 2, 0},             // 62
-    {rra, "RRA", modeIndexedIndirect, 2, 8, 0},     // 63
-    {nop, "NOP", modeZeroPage, 2, 3, 0},            // 64
-    {adc, "ADC", modeZeroPage, 2, 3, 0},            // 65
-    {ror, "ROR", modeZeroPage, 2, 5, 0},            // 66
-    {rra, "RRA", modeZeroPage, 2, 5, 0},            // 67
-    {pla, "PLA", modeImplied, 1, 4, 0},             // 68
-    {adc, "ADC", modeImmediate, 2, 2, 0},           // 69
-    {ror, "ROR", modeAccumulator, 1, 2, 0},         // 6A
-    {arr, "ARR", modeImmediate, 2, 2, 0},           // 6B
-    {jmp, "JMP", modeIndirect, 3, 5, 0},            // 6C
-    {adc, "ADC", modeAbsolute, 3, 4, 0},            // 6D
-    {ror, "ROR", modeAbsolute, 3, 6, 0},            // 6E
-    {rra, "RRA", modeAbsolute, 3, 6, 0},            // 6F
-    {bvs, "BVS", modeRelative, 2, 2, 1},            // 70
-    {adc, "ADC", modeIndirectIndexed, 2, 5, 1},     // 71
-    {kil, "KIL", modeImplied, 0, 2, 0},             // 72
-    {rra, "RRA", modeIndirectIndexed, 2, 8, 0},     // 73
-    {nop, "NOP", modeZeroPageX, 2, 4, 0},           // 74
-    {adc, "ADC", modeZeroPageX, 2, 4, 0},           // 75
-    {ror, "ROR", modeZeroPageX, 2, 6, 0},           // 76
-    {rra, "RRA", modeZeroPageX, 2, 6, 0},           // 77
-    {sei, "SEI", modeImplied, 1, 2, 0},             // 78
-    {adc, "ADC", modeAbsoluteY, 3, 4, 1},           // 79
-    {nop, "NOP", modeImplied, 1, 2, 0},             // 7A
-    {rra, "RRA", modeAbsoluteY, 3, 7, 0},           // 7B
-    {nop, "NOP", modeAbsoluteX, 3, 4, 1},           // 7C
-    {adc, "ADC", modeAbsoluteX, 3, 4, 1},           // 7D
-    {ror, "ROR", modeAbsoluteX, 3, 7, 0},           // 7E
-    {rra, "RRA", modeAbsoluteX, 3, 7, 0},           // 7F
-    {nop, "NOP", modeImmediate, 2, 2, 0},           // 80
-    {sta, "STA", modeIndexedIndirect, 2, 6, 0},     // 81
-    {nop, "NOP", modeImmediate, 2, 2, 0},           // 82
-    {sax, "SAX", modeIndexedIndirect, 2, 6, 0},     // 83
-    {sty, "STY", modeZeroPage, 2, 3, 0},            // 84
-    {sta, "STA", modeZeroPage, 2, 3, 0},            // 85
-    {stx, "STX", modeZeroPage, 2, 3, 0},            // 86
-    {sax, "SAX", modeZeroPage, 2, 3, 0},            // 87
-    {dey, "DEY", modeImplied, 1, 2, 0},             // 88
-    {nop, "NOP", modeImmediate, 2, 2, 0},           // 89
-    {txa, "TXA", modeImplied, 1, 2, 0},             // 8A
-    {xaa, "XAA", modeImmediate, 2, 2, 0},           // 8B
-    {sty, "STY", modeAbsolute, 3, 4, 0},            // 8C
-    {sta, "STA", modeAbsolute, 3, 4, 0},            // 8D
-    {stx, "STX", modeAbsolute, 3, 4, 0},            // 8E
-    {sax, "SAX", modeAbsolute, 3, 4, 0},            // 8F
-    {bcc, "BCC", modeRelative, 2, 2, 1},            // 90
-    {sta, "STA", modeIndirectIndexed, 2, 6, 0},     // 91
-    {kil, "KIL", modeImplied, 0, 2, 0},             // 92
-    {ahx, "AHX", modeIndirectIndexed, 2, 6, 0},     // 93
-    {sty, "STY", modeZeroPageX, 2, 4, 0},           // 94
-    {sta, "STA", modeZeroPageX, 2, 4, 0},           // 95
-    {stx, "STX", modeZeroPageY, 2, 4, 0},           // 96
-    {sax, "SAX", modeZeroPageY, 2, 4, 0},           // 97
-    {tya, "TYA", modeImplied, 1, 2, 0},             // 98
-    {sta, "STA", modeAbsoluteY, 3, 5, 0},           // 99
-    {txs, "TXS", modeImplied, 1, 2, 0},             // 9A
-    {tas, "TAS", modeAbsoluteY, 3, 5, 0},           // 9B
-    {shy, "SHY", modeAbsoluteX, 3, 5, 0},           // 9C
-    {sta, "STA", modeAbsoluteX, 3, 5, 0},           // 9D
-    {shx, "SHX", modeAbsoluteY, 3, 5, 0},           // 9E
-    {ahx, "AHX", modeAbsoluteY, 3, 5, 0},           // 9F
-    {ldy, "LDY", modeImmediate, 2, 2, 0},           // A0
-    {lda, "LDA", modeIndexedIndirect, 2, 6, 0},     // A1
-    {ldx, "LDX", modeImmediate, 2, 2, 0},           // A2
-    {lax, "LAX", modeIndexedIndirect, 2, 6, 0},     // A3
-    {ldy, "LDY", modeZeroPage, 2, 3, 0},            // A4
-    {lda, "LDA", modeZeroPage, 2, 3, 0},            // A5
-    {ldx, "LDX", modeZeroPage, 2, 3, 0},            // A6
-    {lax, "LAX", modeZeroPage, 2, 3, 0},            // A7
-    {tay, "TAY", modeImplied, 1, 2, 0},             // A8
-    {lda, "LDA", modeImmediate, 2, 2, 0},           // A9
-    {tax, "TAX", modeImplied, 1, 2, 0},             // AA
-    {lax, "LAX", modeImmediate, 2, 2, 0},           // AB
-    {ldy, "LDY", modeAbsolute, 3, 4, 0},            // AC
-    {lda, "LDA", modeAbsolute, 3, 4, 0},            // AD
-    {ldx, "LDX", modeAbsolute, 3, 4, 0},            // AE
-    {lax, "LAX", modeAbsolute, 3, 4, 0},            // AF
-    {bcs, "BCS", modeRelative, 2, 2, 1},            // B0
-    {lda, "LDA", modeIndirectIndexed, 2, 5, 1},     // B1
-    {kil, "KIL", modeImplied, 0, 2, 0},             // B2
-    {lax, "LAX", modeIndirectIndexed, 2, 5, 1},     // B3
-    {ldy, "LDY", modeZeroPageX, 2, 4, 0},           // B4
-    {lda, "LDA", modeZeroPageX, 2, 4, 0},           // B5
-    {ldx, "LDX", modeZeroPageY, 2, 4, 0},           // B6
-    {lax, "LAX", modeZeroPageY, 2, 4, 0},           // B7
-    {clv, "CLV", modeImplied, 1, 2, 0},             // B8
-    {lda, "LDA", modeAbsoluteY, 3, 4, 1},           // B9
-    {tsx, "TSX", modeImplied, 1, 2, 0},             // BA
-    {las, "LAS", modeAbsoluteY, 3, 4, 1},           // BB
-    {ldy, "LDY", modeAbsoluteX, 3, 4, 1},           // BC
-    {lda, "LDA", modeAbsoluteX, 3, 4, 1},           // BD
-    {ldx, "LDX", modeAbsoluteY, 3, 4, 1},           // BE
-    {lax, "LAX", modeAbsoluteY, 3, 4, 1},           // BF
-    {cpy, "CPY", modeImmediate, 2, 2, 0},           // C0
-    {cmp, "CMP", modeIndexedIndirect, 2, 6, 0},     // C1
-    {nop, "NOP", modeImmediate, 2, 2, 0},           // C2
-    {dcp, "DCP", modeIndexedIndirect, 2, 8, 0},     // C3
-    {cpy, "CPY", modeZeroPage, 2, 3, 0},            // C4
-    {cmp, "CMP", modeZeroPage, 2, 3, 0},            // C5
-    {dec, "DEC", modeZeroPage, 2, 5, 0},            // C6
-    {dcp, "DCP", modeZeroPage, 2, 5, 0},            // C7
-    {iny, "INY", modeImplied, 1, 2, 0},             // C8
-    {cmp, "CMP", modeImmediate, 2, 2, 0},           // C9
-    {dex, "DEX", modeImplied, 1, 2, 0},             // CA
-    {axs, "AXS", modeImmediate, 2, 2, 0},           // CB
-    {cpy, "CPY", modeAbsolute, 3, 4, 0},            // CC
-    {cmp, "CMP", modeAbsolute, 3, 4, 0},            // CD
-    {dec, "DEC", modeAbsolute, 3, 6, 0},            // CE
-    {dcp, "DCP", modeAbsolute, 3, 6, 0},            // CF
-    {bne, "BNE", modeRelative, 2, 2, 1},            // D0
-    {cmp, "CMP", modeIndirectIndexed, 2, 5, 1},     // D1
-    {kil, "KIL", modeImplied, 0, 2, 0},             // D2
-    {dcp, "DCP", modeIndirectIndexed, 2, 8, 0},     // D3
-    {nop, "NOP", modeZeroPageX, 2, 4, 0},           // D4
-    {cmp, "CMP", modeZeroPageX, 2, 4, 0},           // D5
-    {dec, "DEC", modeZeroPageX, 2, 6, 0},           // D6
-    {dcp, "DCP", modeZeroPageX, 2, 6, 0},           // D7
-    {cld, "CLD", modeImplied, 1, 2, 0},             // D8
-    {cmp, "CMP", modeAbsoluteY, 3, 4, 1},           // D9
-    {nop, "NOP", modeImplied, 1, 2, 0},             // DA
-    {dcp, "DCP", modeAbsoluteY, 3, 7, 0},           // DB
-    {nop, "NOP", modeAbsoluteX, 3, 4, 1},           // DC
-    {cmp, "CMP", modeAbsoluteX, 3, 4, 1},           // DD
-    {dec, "DEC", modeAbsoluteX, 3, 7, 0},           // DE
-    {dcp, "DCP", modeAbsoluteX, 3, 7, 0},           // DF
-    {cpx, "CPX", modeImmediate, 2, 2, 0},           // E0
-    {sbc, "SBC", modeIndexedIndirect, 2, 6, 0},     // E1
-    {nop, "NOP", modeImmediate, 2, 2, 0},           // E2
-    {isc, "ISC", modeIndexedIndirect, 2, 8, 0},     // E3
-    {cpx, "CPX", modeZeroPage, 2, 3, 0},            // E4
-    {sbc, "SBC", modeZeroPage, 2, 3, 0},            // E5
-    {inc, "INC", modeZeroPage, 2, 5, 0},            // E6
-    {isc, "ISC", modeZeroPage, 2, 5, 0},            // E7
-    {inx, "INX", modeImplied, 1, 2, 0},             // E8
-    {sbc, "SBC", modeImmediate, 2, 2, 0},           // E9
-    {nop, "NOP", modeImplied, 1, 2, 0},             // EA
-    {sbc, "SBC", modeImmediate, 2, 2, 0},           // EB
-    {cpx, "CPX", modeAbsolute, 3, 4, 0},            // EC
-    {sbc, "SBC", modeAbsolute, 3, 4, 0},            // ED
-    {inc, "INC", modeAbsolute, 3, 6, 0},            // EE
-    {isc, "ISC", modeAbsolute, 3, 6, 0},            // EF
-    {beq, "BEQ", modeRelative, 2, 2, 1},            // F0
-    {sbc, "SBC", modeIndirectIndexed, 2, 5, 1},     // F1
-    {kil, "KIL", modeImplied, 0, 2, 0},             // F2
-    {isc, "ISC", modeIndirectIndexed, 2, 8, 0},     // F3
-    {nop, "NOP", modeZeroPageX, 2, 4, 0},           // F4
-    {sbc, "SBC", modeZeroPageX, 2, 4, 0},           // F5
-    {inc, "INC", modeZeroPageX, 2, 6, 0},           // F6
-    {isc, "ISC", modeZeroPageX, 2, 6, 0},           // F7
-    {sed, "SED", modeImplied, 1, 2, 0},             // F8
-    {sbc, "SBC", modeAbsoluteY, 3, 4, 1},           // F9
-    {nop, "NOP", modeImplied, 1, 2, 0},             // FA
-    {isc, "ISC", modeAbsoluteY, 3, 7, 0},           // FB
-    {nop, "NOP", modeAbsoluteX, 3, 4, 1},           // FC
-    {sbc, "SBC", modeAbsoluteX, 3, 4, 1},           // FD
-    {inc, "INC", modeAbsoluteX, 3, 7, 0},           // FE
-    {isc, "ISC", modeAbsoluteX, 3, 7, 0}            // FF
+{brk, "BRK", modeImplied, 1, 0, 0}, 			// 00
+{ora, "ORA", modeIndexedIndirect, 2, 6, 0}, 	// 01
+{kil, "KIL", modeImplied, 0, 2, 0}, 			// 02
+{slo, "SLO", modeIndexedIndirect, 0, 8, 0}, 	// 03
+{nop, "NOP", modeZeroPage, 2, 3, 0}, 			// 04
+{ora, "ORA", modeZeroPage, 2, 3, 0}, 			// 05
+{asl, "ASL", modeZeroPage, 2, 5, 0}, 			// 06
+{slo, "SLO", modeZeroPage, 0, 5, 0}, 			// 07
+{php, "PHP", modeImplied, 1, 3, 0}, 			// 08
+{ora, "ORA", modeImmediate, 2, 2, 0}, 			// 09
+{asl, "ASL", modeAccumulator, 1, 2, 0}, 		// 0a
+{anc, "ANC", modeImmediate, 0, 2, 0}, 			// 0b
+{nop, "NOP", modeAbsolute, 3, 4, 0}, 			// 0c
+{ora, "ORA", modeAbsolute, 3, 4, 0}, 			// 0d
+{asl, "ASL", modeAbsolute, 3, 6, 0}, 			// 0e
+{slo, "SLO", modeAbsolute, 0, 6, 0}, 			// 0f
+{bpl, "BPL", modeRelative, 2, 2, 1}, 			// 10
+{ora, "ORA", modeIndirectIndexed, 2, 5, 1}, 	// 11
+{kil, "KIL", modeImplied, 0, 2, 0}, 			// 12
+{slo, "SLO", modeIndirectIndexed, 0, 8, 0}, 	// 13
+{nop, "NOP", modeZeroPageX, 2, 4, 0}, 			// 14
+{ora, "ORA", modeZeroPageX, 2, 4, 0}, 			// 15
+{asl, "ASL", modeZeroPageX, 2, 6, 0}, 			// 16
+{slo, "SLO", modeZeroPageX, 0, 6, 0}, 			// 17
+{clc, "CLC", modeImplied, 1, 2, 0}, 			// 18
+{ora, "ORA", modeAbsoluteY, 3, 4, 1}, 			// 19
+{nop, "NOP", modeImplied, 1, 2, 0}, 			// 1a
+{slo, "SLO", modeAbsoluteY, 0, 7, 0}, 			// 1b
+{nop, "NOP", modeAbsoluteX, 3, 4, 1}, 			// 1c
+{ora, "ORA", modeAbsoluteX, 3, 4, 1}, 			// 1d
+{asl, "ASL", modeAbsoluteX, 3, 7, 0}, 			// 1e
+{slo, "SLO", modeAbsoluteX, 0, 7, 0}, 			// 1f
+{jsr, "JSR", modeAbsolute, 3, 6, 0}, 			// 20
+{and, "AND", modeIndexedIndirect, 2, 6, 0}, 	// 21
+{kil, "KIL", modeImplied, 0, 2, 0}, 			// 22
+{rla, "RLA", modeIndexedIndirect, 0, 8, 0}, 	// 23
+{bit, "BIT", modeZeroPage, 2, 3, 0}, 			// 24
+{and, "AND", modeZeroPage, 2, 3, 0}, 			// 25
+{rol, "ROL", modeZeroPage, 2, 5, 0}, 			// 26
+{rla, "RLA", modeZeroPage, 0, 5, 0}, 			// 27
+{plp, "PLP", modeImplied, 1, 4, 0}, 			// 28
+{and, "AND", modeImmediate, 2, 2, 0}, 			// 29
+{rol, "ROL", modeAccumulator, 1, 2, 0}, 		// 2a
+{anc, "ANC", modeImmediate, 0, 2, 0}, 			// 2b
+{bit, "BIT", modeAbsolute, 3, 4, 0}, 			// 2c
+{and, "AND", modeAbsolute, 3, 4, 0}, 			// 2d
+{rol, "ROL", modeAbsolute, 3, 6, 0}, 			// 2e
+{rla, "RLA", modeAbsolute, 0, 6, 0}, 			// 2f
+{bmi, "BMI", modeRelative, 2, 2, 1}, 			// 30
+{and, "AND", modeIndirectIndexed, 2, 5, 1}, 	// 31
+{kil, "KIL", modeImplied, 0, 2, 0}, 			// 32
+{rla, "RLA", modeIndirectIndexed, 0, 8, 0}, 	// 33
+{nop, "NOP", modeZeroPageX, 2, 4, 0}, 			// 34
+{and, "AND", modeZeroPageX, 2, 4, 0}, 			// 35
+{rol, "ROL", modeZeroPageX, 2, 6, 0}, 			// 36
+{rla, "RLA", modeZeroPageX, 0, 6, 0}, 			// 37
+{sec, "SEC", modeImplied, 1, 2, 0}, 			// 38
+{and, "AND", modeAbsoluteY, 3, 4, 1}, 			// 39
+{nop, "NOP", modeImplied, 1, 2, 0}, 			// 3a
+{rla, "RLA", modeAbsoluteY, 0, 7, 0}, 			// 3b
+{nop, "NOP", modeAbsoluteX, 3, 4, 1}, 			// 3c
+{and, "AND", modeAbsoluteX, 3, 4, 1}, 			// 3d
+{rol, "ROL", modeAbsoluteX, 3, 7, 0}, 			// 3e
+{rla, "RLA", modeAbsoluteX, 0, 7, 0}, 			// 3f
+{rti, "RTI", modeImplied, 1, 6, 0}, 			// 40
+{eor, "EOR", modeIndexedIndirect, 2, 6, 0}, 	// 41
+{kil, "KIL", modeImplied, 0, 2, 0}, 			// 42
+{sre, "SRE", modeIndexedIndirect, 0, 8, 0}, 	// 43
+{nop, "NOP", modeZeroPage, 2, 3, 0}, 			// 44
+{eor, "EOR", modeZeroPage, 2, 3, 0}, 			// 45
+{lsr, "LSR", modeZeroPage, 2, 5, 0}, 			// 46
+{sre, "SRE", modeZeroPage, 0, 5, 0}, 			// 47
+{pha, "PHA", modeImplied, 1, 3, 0}, 			// 48
+{eor, "EOR", modeImmediate, 2, 2, 0}, 			// 49
+{lsr, "LSR", modeAccumulator, 1, 2, 0}, 		// 4a
+{alr, "ALR", modeImmediate, 0, 2, 0}, 			// 4b
+{jmp, "JMP", modeAbsolute, 3, 3, 0}, 			// 4c
+{eor, "EOR", modeAbsolute, 3, 4, 0}, 			// 4d
+{lsr, "LSR", modeAbsolute, 3, 6, 0}, 			// 4e
+{sre, "SRE", modeAbsolute, 0, 6, 0}, 			// 4f
+{bvc, "BVC", modeRelative, 2, 2, 1}, 			// 50
+{eor, "EOR", modeIndirectIndexed, 2, 5, 1}, 	// 51
+{kil, "KIL", modeImplied, 0, 2, 0}, 			// 52
+{sre, "SRE", modeIndirectIndexed, 0, 8, 0}, 	// 53
+{nop, "NOP", modeZeroPageX, 2, 4, 0}, 			// 54
+{eor, "EOR", modeZeroPageX, 2, 4, 0}, 			// 55
+{lsr, "LSR", modeZeroPageX, 2, 6, 0}, 			// 56
+{sre, "SRE", modeZeroPageX, 0, 6, 0}, 			// 57
+{cli, "CLI", modeImplied, 1, 2, 0}, 			// 58
+{eor, "EOR", modeAbsoluteY, 3, 4, 1}, 			// 59
+{nop, "NOP", modeImplied, 1, 2, 0}, 			// 5a
+{sre, "SRE", modeAbsoluteY, 0, 7, 0}, 			// 5b
+{nop, "NOP", modeAbsoluteX, 3, 4, 1}, 			// 5c
+{eor, "EOR", modeAbsoluteX, 3, 4, 1}, 			// 5d
+{lsr, "LSR", modeAbsoluteX, 3, 7, 0}, 			// 5e
+{sre, "SRE", modeAbsoluteX, 0, 7, 0}, 			// 5f
+{rts, "RTS", modeImplied, 1, 6, 0}, 			// 60
+{adc, "ADC", modeIndexedIndirect, 2, 6, 0}, 	// 61
+{kil, "KIL", modeImplied, 0, 2, 0}, 			// 62
+{rra, "RRA", modeIndexedIndirect, 0, 8, 0}, 	// 63
+{nop, "NOP", modeZeroPage, 2, 3, 0}, 			// 64
+{adc, "ADC", modeZeroPage, 2, 3, 0}, 			// 65
+{ror, "ROR", modeZeroPage, 2, 5, 0}, 			// 66
+{rra, "RRA", modeZeroPage, 0, 5, 0}, 			// 67
+{pla, "PLA", modeImplied, 1, 4, 0}, 			// 68
+{adc, "ADC", modeImmediate, 2, 2, 0}, 			// 69
+{ror, "ROR", modeAccumulator, 1, 2, 0}, 		// 6a
+{arr, "ARR", modeImmediate, 0, 2, 0}, 			// 6b
+{jmp, "JMP", modeIndirect, 3, 5, 0}, 			// 6c
+{adc, "ADC", modeAbsolute, 3, 4, 0}, 			// 6d
+{ror, "ROR", modeAbsolute, 3, 6, 0}, 			// 6e
+{rra, "RRA", modeAbsolute, 0, 6, 0}, 			// 6f
+{bvs, "BVS", modeRelative, 2, 2, 1}, 			// 70
+{adc, "ADC", modeIndirectIndexed, 2, 5, 1}, 	// 71
+{kil, "KIL", modeImplied, 0, 2, 0}, 			// 72
+{rra, "RRA", modeIndirectIndexed, 0, 8, 0}, 	// 73
+{nop, "NOP", modeZeroPageX, 2, 4, 0}, 			// 74
+{adc, "ADC", modeZeroPageX, 2, 4, 0}, 			// 75
+{ror, "ROR", modeZeroPageX, 2, 6, 0}, 			// 76
+{rra, "RRA", modeZeroPageX, 0, 6, 0}, 			// 77
+{sei, "SEI", modeImplied, 1, 2, 0}, 			// 78
+{adc, "ADC", modeAbsoluteY, 3, 4, 1}, 			// 79
+{nop, "NOP", modeImplied, 1, 2, 0}, 			// 7a
+{rra, "RRA", modeAbsoluteY, 0, 7, 0}, 			// 7b
+{nop, "NOP", modeAbsoluteX, 3, 4, 1}, 			// 7c
+{adc, "ADC", modeAbsoluteX, 3, 4, 1}, 			// 7d
+{ror, "ROR", modeAbsoluteX, 3, 7, 0}, 			// 7e
+{rra, "RRA", modeAbsoluteX, 0, 7, 0}, 			// 7f
+{nop, "NOP", modeImmediate, 2, 2, 0}, 			// 80
+{sta, "STA", modeIndexedIndirect, 2, 6, 0}, 	// 81
+{nop, "NOP", modeImmediate, 0, 2, 0}, 			// 82
+{sax, "SAX", modeIndexedIndirect, 0, 6, 0}, 	// 83
+{sty, "STY", modeZeroPage, 2, 3, 0}, 			// 84
+{sta, "STA", modeZeroPage, 2, 3, 0}, 			// 85
+{stx, "STX", modeZeroPage, 2, 3, 0}, 			// 86
+{sax, "SAX", modeZeroPage, 0, 3, 0}, 			// 87
+{dey, "DEY", modeImplied, 1, 2, 0}, 			// 88
+{nop, "NOP", modeImmediate, 0, 2, 0}, 			// 89
+{txa, "TXA", modeImplied, 1, 2, 0}, 			// 8a
+{xaa, "XAA", modeImmediate, 0, 2, 0}, 			// 8b
+{sty, "STY", modeAbsolute, 3, 4, 0}, 			// 8c
+{sta, "STA", modeAbsolute, 3, 4, 0}, 			// 8d
+{stx, "STX", modeAbsolute, 3, 4, 0}, 			// 8e
+{sax, "SAX", modeAbsolute, 0, 4, 0}, 			// 8f
+{bcc, "BCC", modeRelative, 2, 2, 1}, 			// 90
+{sta, "STA", modeIndirectIndexed, 2, 6, 0}, 	// 91
+{kil, "KIL", modeImplied, 0, 2, 0}, 			// 92
+{ahx, "AHX", modeIndirectIndexed, 0, 6, 0}, 	// 93
+{sty, "STY", modeZeroPageX, 2, 4, 0}, 			// 94
+{sta, "STA", modeZeroPageX, 2, 4, 0}, 			// 95
+{stx, "STX", modeZeroPageY, 2, 4, 0}, 			// 96
+{sax, "SAX", modeZeroPageY, 0, 4, 0}, 			// 97
+{tya, "TYA", modeImplied, 1, 2, 0}, 			// 98
+{sta, "STA", modeAbsoluteY, 3, 5, 0}, 			// 99
+{txs, "TXS", modeImplied, 1, 2, 0}, 			// 9a
+{tas, "TAS", modeAbsoluteY, 0, 5, 0}, 			// 9b
+{shy, "SHY", modeAbsoluteX, 0, 5, 0}, 			// 9c
+{sta, "STA", modeAbsoluteX, 3, 5, 0}, 			// 9d
+{shx, "SHX", modeAbsoluteY, 0, 5, 0}, 			// 9e
+{ahx, "AHX", modeAbsoluteY, 0, 5, 0}, 			// 9f
+{ldy, "LDY", modeImmediate, 2, 2, 0}, 			// a0
+{lda, "LDA", modeIndexedIndirect, 2, 6, 0}, 	// a1
+{ldx, "LDX", modeImmediate, 2, 2, 0}, 			// a2
+{lax, "LAX", modeIndexedIndirect, 0, 6, 0}, 	// a3
+{ldy, "LDY", modeZeroPage, 2, 3, 0}, 			// a4
+{lda, "LDA", modeZeroPage, 2, 3, 0}, 			// a5
+{ldx, "LDX", modeZeroPage, 2, 3, 0}, 			// a6
+{lax, "LAX", modeZeroPage, 0, 3, 0}, 			// a7
+{tay, "TAY", modeImplied, 1, 2, 0}, 			// a8
+{lda, "LDA", modeImmediate, 2, 2, 0}, 			// a9
+{tax, "TAX", modeImplied, 1, 2, 0}, 			// aa
+{lax, "LAX", modeImmediate, 0, 2, 0}, 			// ab
+{ldy, "LDY", modeAbsolute, 3, 4, 0}, 			// ac
+{lda, "LDA", modeAbsolute, 3, 4, 0}, 			// ad
+{ldx, "LDX", modeAbsolute, 3, 4, 0}, 			// ae
+{lax, "LAX", modeAbsolute, 0, 4, 0}, 			// af
+{bcs, "BCS", modeRelative, 2, 2, 1}, 			// b0
+{lda, "LDA", modeIndirectIndexed, 2, 5, 1}, 	// b1
+{kil, "KIL", modeImplied, 0, 2, 0}, 			// b2
+{lax, "LAX", modeIndirectIndexed, 0, 5, 1}, 	// b3
+{ldy, "LDY", modeZeroPageX, 2, 4, 0}, 			// b4
+{lda, "LDA", modeZeroPageX, 2, 4, 0}, 			// b5
+{ldx, "LDX", modeZeroPageY, 2, 4, 0}, 			// b6
+{lax, "LAX", modeZeroPageY, 0, 4, 0}, 			// b7
+{clv, "CLV", modeImplied, 1, 2, 0}, 			// b8
+{lda, "LDA", modeAbsoluteY, 3, 4, 1}, 			// b9
+{tsx, "TSX", modeImplied, 1, 2, 0}, 			// ba
+{las, "LAS", modeAbsoluteY, 0, 4, 1}, 			// bb
+{ldy, "LDY", modeAbsoluteX, 3, 4, 1}, 			// bc
+{lda, "LDA", modeAbsoluteX, 3, 4, 1}, 			// bd
+{ldx, "LDX", modeAbsoluteY, 3, 4, 1}, 			// be
+{lax, "LAX", modeAbsoluteY, 0, 4, 1}, 			// bf
+{cpy, "CPY", modeImmediate, 2, 2, 0}, 			// c0
+{cmp, "CMP", modeIndexedIndirect, 2, 6, 0}, 	// c1
+{nop, "NOP", modeImmediate, 0, 2, 0}, 			// c2
+{dcp, "DCP", modeIndexedIndirect, 0, 8, 0}, 	// c3
+{cpy, "CPY", modeZeroPage, 2, 3, 0}, 			// c4
+{cmp, "CMP", modeZeroPage, 2, 3, 0}, 			// c5
+{dec, "DEC", modeZeroPage, 2, 5, 0}, 			// c6
+{dcp, "DCP", modeZeroPage, 0, 5, 0}, 			// c7
+{iny, "INY", modeImplied, 1, 2, 0}, 			// c8
+{cmp, "CMP", modeImmediate, 2, 2, 0}, 			// c9
+{dex, "DEX", modeImplied, 1, 2, 0}, 			// ca
+{axs, "AXS", modeImmediate, 0, 2, 0}, 			// cb
+{cpy, "CPY", modeAbsolute, 3, 4, 0}, 			// cc
+{cmp, "CMP", modeAbsolute, 3, 4, 0}, 			// cd
+{dec, "DEC", modeAbsolute, 3, 6, 0}, 			// ce
+{dcp, "DCP", modeAbsolute, 0, 6, 0}, 			// cf
+{bne, "BNE", modeRelative, 2, 2, 1}, 			// d0
+{cmp, "CMP", modeIndirectIndexed, 2, 5, 1}, 	// d1
+{kil, "KIL", modeImplied, 0, 2, 0}, 			// d2
+{dcp, "DCP", modeIndirectIndexed, 0, 8, 0}, 	// d3
+{nop, "NOP", modeZeroPageX, 2, 4, 0}, 			// d4
+{cmp, "CMP", modeZeroPageX, 2, 4, 0}, 			// d5
+{dec, "DEC", modeZeroPageX, 2, 6, 0}, 			// d6
+{dcp, "DCP", modeZeroPageX, 0, 6, 0}, 			// d7
+{cld, "CLD", modeImplied, 1, 2, 0}, 			// d8
+{cmp, "CMP", modeAbsoluteY, 3, 4, 1}, 			// d9
+{nop, "NOP", modeImplied, 1, 2, 0}, 			// da
+{dcp, "DCP", modeAbsoluteY, 0, 7, 0}, 			// db
+{nop, "NOP", modeAbsoluteX, 3, 4, 1}, 			// dc
+{cmp, "CMP", modeAbsoluteX, 3, 4, 1}, 			// dd
+{dec, "DEC", modeAbsoluteX, 3, 7, 0}, 			// de
+{dcp, "DCP", modeAbsoluteX, 0, 7, 0}, 			// df
+{cpx, "CPX", modeImmediate, 2, 2, 0}, 			// e0
+{sbc, "SBC", modeIndexedIndirect, 2, 6, 0}, 	// e1
+{nop, "NOP", modeImmediate, 0, 2, 0}, 			// e2
+{isc, "ISC", modeIndexedIndirect, 0, 8, 0}, 	// e3
+{cpx, "CPX", modeZeroPage, 2, 3, 0}, 			// e4
+{sbc, "SBC", modeZeroPage, 2, 3, 0}, 			// e5
+{inc, "INC", modeZeroPage, 2, 5, 0}, 			// e6
+{isc, "ISC", modeZeroPage, 0, 5, 0}, 			// e7
+{inx, "INX", modeImplied, 1, 2, 0}, 			// e8
+{sbc, "SBC", modeImmediate, 2, 2, 0}, 			// e9
+{nop, "NOP", modeImplied, 1, 2, 0}, 			// ea
+{sbc, "SBC", modeImmediate, 0, 2, 0}, 			// eb
+{cpx, "CPX", modeAbsolute, 3, 4, 0}, 			// ec
+{sbc, "SBC", modeAbsolute, 3, 4, 0}, 			// ed
+{inc, "INC", modeAbsolute, 3, 6, 0}, 			// ee
+{isc, "ISC", modeAbsolute, 0, 6, 0}, 			// ef
+{beq, "BEQ", modeRelative, 2, 2, 1}, 			// f0
+{sbc, "SBC", modeIndirectIndexed, 2, 5, 1}, 	// f1
+{kil, "KIL", modeImplied, 0, 2, 0}, 			// f2
+{isc, "ISC", modeIndirectIndexed, 0, 8, 0}, 	// f3
+{nop, "NOP", modeZeroPageX, 2, 4, 0}, 			// f4
+{sbc, "SBC", modeZeroPageX, 2, 4, 0}, 			// f5
+{inc, "INC", modeZeroPageX, 2, 6, 0}, 			// f6
+{isc, "ISC", modeZeroPageX, 0, 6, 0}, 			// f7
+{sed, "SED", modeImplied, 1, 2, 0}, 			// f8
+{sbc, "SBC", modeAbsoluteY, 3, 4, 1}, 			// f9
+{nop, "NOP", modeImplied, 1, 2, 0}, 			// fa
+{isc, "ISC", modeAbsoluteY, 0, 7, 0}, 			// fb
+{nop, "NOP", modeAbsoluteX, 3, 4, 1}, 			// fc
+{sbc, "SBC", modeAbsoluteX, 3, 4, 1}, 			// fd
+{inc, "INC", modeAbsoluteX, 3, 7, 0}, 			// fe
+{isc, "ISC", modeAbsoluteX, 0, 7, 0}, 			// ff
 };
 
 
