@@ -1,2 +1,2 @@
 # cnes
-a simple nes emulator, sdl2, write in c. Inlcude apu, cpu and ppu.
+A simple NES emulator, SDL2, write in C. Include APU, CPU and PPU.
