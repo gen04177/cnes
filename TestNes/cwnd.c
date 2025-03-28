@@ -66,30 +66,13 @@ int wnd_init(const char *filename)
     rect.h = HEIGHT;
     rect.w = WIDTH;
 
-    window = SDL_CreateWindow(filename,
-                              SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-                              WIDTH, HEIGHT,
-                              SDL_WINDOW_SHOWN | (useOpenGL ? SDL_WINDOW_OPENGL : 0));
-    if (!window) {
-        fprintf(stderr, "Couldn't create SDL window with OpenGL: %s\n", SDL_GetError());
-
-        useOpenGL = false;
         window = SDL_CreateWindow(filename,
                                   SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-                                  WIDTH, HEIGHT,
+                                  1024, 768,
                                   SDL_WINDOW_SHOWN);
-        if (!window) {
-            fprintf(stderr, "Couldn't create SDL window without OpenGL: %s\n", SDL_GetError());
-            return -1;
-        }
-    }
 
 
-    if (useOpenGL) {
-        renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-    } else {
         renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_SOFTWARE);
-    }
 
     if (!renderer) {
         fprintf(stderr, "Couldn't create SDL renderer: %s\n", SDL_GetError());
@@ -100,7 +83,6 @@ int wnd_init(const char *filename)
     if (SDL_GetRendererInfo(renderer, &info) != 0) {
         fprintf(stderr, "Failed to get renderer info: %s\n", SDL_GetError());
     } else {
-        printf("\nRenderer name: %s\n", info.name);
         printf("\n*** Loading cnes PS5 ***\n");
     }
     
