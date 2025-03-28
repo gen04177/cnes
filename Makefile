@@ -5,9 +5,11 @@ else
 endif
 
 CFLAGS := -O3 -I./TestNes -I./TestNes/MMC \
-          $(shell ${PS5_SYSROOT}/bin/sdl2-config --cflags --libs) \
-          -lkernel_sys -lSDL2main -lSDL2_mixer -lSDL2
-# -lGL
+	     $(shell $(PS5_PAYLOAD_SDK)/bin/prospero-sdl2-config --cflags) \
+
+
+LDFLAGS := $(shell $(PS5_PAYLOAD_SDK)/bin/prospero-sdl2-config --libs) \
+           -lkernel_sys -lSDL2main -lSDL2_mixer -lSDL2 -lSceSystemService
 
 SRCS := TestNes/capu.c TestNes/ccpu.c TestNes/main.c  TestNes/cnes.c TestNes/cppu.c TestNes/cwnd.c \
         TestNes/MMC/mapper_aorom.c TestNes/MMC/mapper.c \
@@ -16,7 +18,7 @@ SRCS := TestNes/capu.c TestNes/ccpu.c TestNes/main.c  TestNes/cnes.c TestNes/cpp
         TestNes/MMC/mapper_nrom.c TestNes/MMC/mapper_unrom.c
 
 cnes.elf: $(SRCS)
-	  $(CC) $(CFLAGS) -o $@ $(SRCS)
+	  $(CC) $(CFLAGS) -o $@ $(SRCS) $(LDFLAGS)
 
 clean:
 	  rm -f cnes.elf
